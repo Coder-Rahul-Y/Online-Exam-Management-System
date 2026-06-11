@@ -40,8 +40,8 @@ export default async function StudentScorecardPage({
 
   if (!submission || submission.studentId !== studentId) notFound()
 
-  const responseMap = new Map(submission.responses.map((r) => [r.questionId, r]))
-  const totalMarks = submission.exam.questions.reduce((acc, q) => acc + Number(q.marksAwarded), 0)
+  const responseMap = new Map<any, any>(submission.responses.map((r: any) => [r.questionId, r]))
+  const totalMarks = submission.exam.questions.reduce((acc: number, q: any) => acc + Number(q.marksAwarded), 0)
 
   return (
     <div className="space-y-6">
@@ -98,10 +98,10 @@ export default async function StudentScorecardPage({
           <CardDescription>Your answers compared to the correct options.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {submission.exam.questions.map((question, idx) => {
+          {submission.exam.questions.map((question: any, idx: number) => {
             const response = responseMap.get(question.id)
             const selectedOptionId = response?.selectedOptionId ?? null
-            const correctOption = question.options.find((o) => o.isCorrect)
+            const correctOption = question.options.find((o: any) => o.isCorrect)
             const isCorrect = selectedOptionId !== null && selectedOptionId === correctOption?.id
             const isSkipped = selectedOptionId === null
 
@@ -127,7 +127,7 @@ export default async function StudentScorecardPage({
                 </div>
 
                 <div className="grid gap-2">
-                  {question.options.map((option) => {
+                  {question.options.map((option: any) => {
                     const isSelected = option.id === selectedOptionId
                     const isRight = option.isCorrect
 

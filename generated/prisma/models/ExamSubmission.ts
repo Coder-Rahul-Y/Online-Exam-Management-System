@@ -31,6 +31,7 @@ export type ExamSubmissionAvgAggregateOutputType = {
   examId: number | null
   studentId: number | null
   totalScore: runtime.Decimal | null
+  violationCount: number | null
 }
 
 export type ExamSubmissionSumAggregateOutputType = {
@@ -38,6 +39,7 @@ export type ExamSubmissionSumAggregateOutputType = {
   examId: number | null
   studentId: number | null
   totalScore: runtime.Decimal | null
+  violationCount: number | null
 }
 
 export type ExamSubmissionMinAggregateOutputType = {
@@ -48,6 +50,7 @@ export type ExamSubmissionMinAggregateOutputType = {
   submittedAt: Date | null
   totalScore: runtime.Decimal | null
   status: $Enums.SubmissionStatus | null
+  violationCount: number | null
 }
 
 export type ExamSubmissionMaxAggregateOutputType = {
@@ -58,6 +61,7 @@ export type ExamSubmissionMaxAggregateOutputType = {
   submittedAt: Date | null
   totalScore: runtime.Decimal | null
   status: $Enums.SubmissionStatus | null
+  violationCount: number | null
 }
 
 export type ExamSubmissionCountAggregateOutputType = {
@@ -68,6 +72,7 @@ export type ExamSubmissionCountAggregateOutputType = {
   submittedAt: number
   totalScore: number
   status: number
+  violationCount: number
   _all: number
 }
 
@@ -77,6 +82,7 @@ export type ExamSubmissionAvgAggregateInputType = {
   examId?: true
   studentId?: true
   totalScore?: true
+  violationCount?: true
 }
 
 export type ExamSubmissionSumAggregateInputType = {
@@ -84,6 +90,7 @@ export type ExamSubmissionSumAggregateInputType = {
   examId?: true
   studentId?: true
   totalScore?: true
+  violationCount?: true
 }
 
 export type ExamSubmissionMinAggregateInputType = {
@@ -94,6 +101,7 @@ export type ExamSubmissionMinAggregateInputType = {
   submittedAt?: true
   totalScore?: true
   status?: true
+  violationCount?: true
 }
 
 export type ExamSubmissionMaxAggregateInputType = {
@@ -104,6 +112,7 @@ export type ExamSubmissionMaxAggregateInputType = {
   submittedAt?: true
   totalScore?: true
   status?: true
+  violationCount?: true
 }
 
 export type ExamSubmissionCountAggregateInputType = {
@@ -114,6 +123,7 @@ export type ExamSubmissionCountAggregateInputType = {
   submittedAt?: true
   totalScore?: true
   status?: true
+  violationCount?: true
   _all?: true
 }
 
@@ -211,6 +221,7 @@ export type ExamSubmissionGroupByOutputType = {
   submittedAt: Date | null
   totalScore: runtime.Decimal
   status: $Enums.SubmissionStatus
+  violationCount: number
   _count: ExamSubmissionCountAggregateOutputType | null
   _avg: ExamSubmissionAvgAggregateOutputType | null
   _sum: ExamSubmissionSumAggregateOutputType | null
@@ -244,6 +255,7 @@ export type ExamSubmissionWhereInput = {
   submittedAt?: Prisma.DateTimeNullableFilter<"ExamSubmission"> | Date | string | null
   totalScore?: Prisma.DecimalFilter<"ExamSubmission"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFilter<"ExamSubmission"> | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFilter<"ExamSubmission"> | number
   exam?: Prisma.XOR<Prisma.ExamScalarRelationFilter, Prisma.ExamWhereInput>
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   responses?: Prisma.StudentResponseListRelationFilter
@@ -257,6 +269,7 @@ export type ExamSubmissionOrderByWithRelationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   totalScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  violationCount?: Prisma.SortOrder
   exam?: Prisma.ExamOrderByWithRelationInput
   student?: Prisma.UserOrderByWithRelationInput
   responses?: Prisma.StudentResponseOrderByRelationAggregateInput
@@ -274,6 +287,7 @@ export type ExamSubmissionWhereUniqueInput = Prisma.AtLeast<{
   submittedAt?: Prisma.DateTimeNullableFilter<"ExamSubmission"> | Date | string | null
   totalScore?: Prisma.DecimalFilter<"ExamSubmission"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFilter<"ExamSubmission"> | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFilter<"ExamSubmission"> | number
   exam?: Prisma.XOR<Prisma.ExamScalarRelationFilter, Prisma.ExamWhereInput>
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   responses?: Prisma.StudentResponseListRelationFilter
@@ -287,6 +301,7 @@ export type ExamSubmissionOrderByWithAggregationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   totalScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  violationCount?: Prisma.SortOrder
   _count?: Prisma.ExamSubmissionCountOrderByAggregateInput
   _avg?: Prisma.ExamSubmissionAvgOrderByAggregateInput
   _max?: Prisma.ExamSubmissionMaxOrderByAggregateInput
@@ -305,6 +320,7 @@ export type ExamSubmissionScalarWhereWithAggregatesInput = {
   submittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamSubmission"> | Date | string | null
   totalScore?: Prisma.DecimalWithAggregatesFilter<"ExamSubmission"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusWithAggregatesFilter<"ExamSubmission"> | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntWithAggregatesFilter<"ExamSubmission"> | number
 }
 
 export type ExamSubmissionCreateInput = {
@@ -312,6 +328,7 @@ export type ExamSubmissionCreateInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
   exam: Prisma.ExamCreateNestedOneWithoutSubmissionsInput
   student: Prisma.UserCreateNestedOneWithoutSubmissionsInput
   responses?: Prisma.StudentResponseCreateNestedManyWithoutSubmissionInput
@@ -325,6 +342,7 @@ export type ExamSubmissionUncheckedCreateInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
   responses?: Prisma.StudentResponseUncheckedCreateNestedManyWithoutSubmissionInput
 }
 
@@ -333,6 +351,7 @@ export type ExamSubmissionUpdateInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
   exam?: Prisma.ExamUpdateOneRequiredWithoutSubmissionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutSubmissionsNestedInput
   responses?: Prisma.StudentResponseUpdateManyWithoutSubmissionNestedInput
@@ -346,6 +365,7 @@ export type ExamSubmissionUncheckedUpdateInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
   responses?: Prisma.StudentResponseUncheckedUpdateManyWithoutSubmissionNestedInput
 }
 
@@ -357,6 +377,7 @@ export type ExamSubmissionCreateManyInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
 }
 
 export type ExamSubmissionUpdateManyMutationInput = {
@@ -364,6 +385,7 @@ export type ExamSubmissionUpdateManyMutationInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ExamSubmissionUncheckedUpdateManyInput = {
@@ -374,6 +396,7 @@ export type ExamSubmissionUncheckedUpdateManyInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ExamSubmissionListRelationFilter = {
@@ -399,6 +422,7 @@ export type ExamSubmissionCountOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  violationCount?: Prisma.SortOrder
 }
 
 export type ExamSubmissionAvgOrderByAggregateInput = {
@@ -406,6 +430,7 @@ export type ExamSubmissionAvgOrderByAggregateInput = {
   examId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
+  violationCount?: Prisma.SortOrder
 }
 
 export type ExamSubmissionMaxOrderByAggregateInput = {
@@ -416,6 +441,7 @@ export type ExamSubmissionMaxOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  violationCount?: Prisma.SortOrder
 }
 
 export type ExamSubmissionMinOrderByAggregateInput = {
@@ -426,6 +452,7 @@ export type ExamSubmissionMinOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  violationCount?: Prisma.SortOrder
 }
 
 export type ExamSubmissionSumOrderByAggregateInput = {
@@ -433,6 +460,7 @@ export type ExamSubmissionSumOrderByAggregateInput = {
   examId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   totalScore?: Prisma.SortOrder
+  violationCount?: Prisma.SortOrder
 }
 
 export type ExamSubmissionScalarRelationFilter = {
@@ -551,6 +579,7 @@ export type ExamSubmissionCreateWithoutStudentInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
   exam: Prisma.ExamCreateNestedOneWithoutSubmissionsInput
   responses?: Prisma.StudentResponseCreateNestedManyWithoutSubmissionInput
 }
@@ -562,6 +591,7 @@ export type ExamSubmissionUncheckedCreateWithoutStudentInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
   responses?: Prisma.StudentResponseUncheckedCreateNestedManyWithoutSubmissionInput
 }
 
@@ -602,6 +632,7 @@ export type ExamSubmissionScalarWhereInput = {
   submittedAt?: Prisma.DateTimeNullableFilter<"ExamSubmission"> | Date | string | null
   totalScore?: Prisma.DecimalFilter<"ExamSubmission"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFilter<"ExamSubmission"> | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFilter<"ExamSubmission"> | number
 }
 
 export type ExamSubmissionCreateWithoutExamInput = {
@@ -609,6 +640,7 @@ export type ExamSubmissionCreateWithoutExamInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
   student: Prisma.UserCreateNestedOneWithoutSubmissionsInput
   responses?: Prisma.StudentResponseCreateNestedManyWithoutSubmissionInput
 }
@@ -620,6 +652,7 @@ export type ExamSubmissionUncheckedCreateWithoutExamInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
   responses?: Prisma.StudentResponseUncheckedCreateNestedManyWithoutSubmissionInput
 }
 
@@ -654,6 +687,7 @@ export type ExamSubmissionCreateWithoutResponsesInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
   exam: Prisma.ExamCreateNestedOneWithoutSubmissionsInput
   student: Prisma.UserCreateNestedOneWithoutSubmissionsInput
 }
@@ -666,6 +700,7 @@ export type ExamSubmissionUncheckedCreateWithoutResponsesInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
 }
 
 export type ExamSubmissionCreateOrConnectWithoutResponsesInput = {
@@ -689,6 +724,7 @@ export type ExamSubmissionUpdateWithoutResponsesInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
   exam?: Prisma.ExamUpdateOneRequiredWithoutSubmissionsNestedInput
   student?: Prisma.UserUpdateOneRequiredWithoutSubmissionsNestedInput
 }
@@ -701,6 +737,7 @@ export type ExamSubmissionUncheckedUpdateWithoutResponsesInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ExamSubmissionCreateManyStudentInput = {
@@ -710,6 +747,7 @@ export type ExamSubmissionCreateManyStudentInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
 }
 
 export type ExamSubmissionUpdateWithoutStudentInput = {
@@ -717,6 +755,7 @@ export type ExamSubmissionUpdateWithoutStudentInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
   exam?: Prisma.ExamUpdateOneRequiredWithoutSubmissionsNestedInput
   responses?: Prisma.StudentResponseUpdateManyWithoutSubmissionNestedInput
 }
@@ -728,6 +767,7 @@ export type ExamSubmissionUncheckedUpdateWithoutStudentInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
   responses?: Prisma.StudentResponseUncheckedUpdateManyWithoutSubmissionNestedInput
 }
 
@@ -738,6 +778,7 @@ export type ExamSubmissionUncheckedUpdateManyWithoutStudentInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ExamSubmissionCreateManyExamInput = {
@@ -747,6 +788,7 @@ export type ExamSubmissionCreateManyExamInput = {
   submittedAt?: Date | string | null
   totalScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.SubmissionStatus
+  violationCount?: number
 }
 
 export type ExamSubmissionUpdateWithoutExamInput = {
@@ -754,6 +796,7 @@ export type ExamSubmissionUpdateWithoutExamInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
   student?: Prisma.UserUpdateOneRequiredWithoutSubmissionsNestedInput
   responses?: Prisma.StudentResponseUpdateManyWithoutSubmissionNestedInput
 }
@@ -765,6 +808,7 @@ export type ExamSubmissionUncheckedUpdateWithoutExamInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
   responses?: Prisma.StudentResponseUncheckedUpdateManyWithoutSubmissionNestedInput
 }
 
@@ -775,6 +819,7 @@ export type ExamSubmissionUncheckedUpdateManyWithoutExamInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   totalScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  violationCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -816,6 +861,7 @@ export type ExamSubmissionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   submittedAt?: boolean
   totalScore?: boolean
   status?: boolean
+  violationCount?: boolean
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   responses?: boolean | Prisma.ExamSubmission$responsesArgs<ExtArgs>
@@ -830,6 +876,7 @@ export type ExamSubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   submittedAt?: boolean
   totalScore?: boolean
   status?: boolean
+  violationCount?: boolean
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["examSubmission"]>
@@ -842,6 +889,7 @@ export type ExamSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   submittedAt?: boolean
   totalScore?: boolean
   status?: boolean
+  violationCount?: boolean
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["examSubmission"]>
@@ -854,9 +902,10 @@ export type ExamSubmissionSelectScalar = {
   submittedAt?: boolean
   totalScore?: boolean
   status?: boolean
+  violationCount?: boolean
 }
 
-export type ExamSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "examId" | "studentId" | "startedAt" | "submittedAt" | "totalScore" | "status", ExtArgs["result"]["examSubmission"]>
+export type ExamSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "examId" | "studentId" | "startedAt" | "submittedAt" | "totalScore" | "status" | "violationCount", ExtArgs["result"]["examSubmission"]>
 export type ExamSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -887,6 +936,7 @@ export type $ExamSubmissionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     submittedAt: Date | null
     totalScore: runtime.Decimal
     status: $Enums.SubmissionStatus
+    violationCount: number
   }, ExtArgs["result"]["examSubmission"]>
   composites: {}
 }
@@ -1320,6 +1370,7 @@ export interface ExamSubmissionFieldRefs {
   readonly submittedAt: Prisma.FieldRef<"ExamSubmission", 'DateTime'>
   readonly totalScore: Prisma.FieldRef<"ExamSubmission", 'Decimal'>
   readonly status: Prisma.FieldRef<"ExamSubmission", 'SubmissionStatus'>
+  readonly violationCount: Prisma.FieldRef<"ExamSubmission", 'Int'>
 }
     
 

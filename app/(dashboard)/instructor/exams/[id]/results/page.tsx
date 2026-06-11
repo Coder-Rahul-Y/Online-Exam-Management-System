@@ -42,9 +42,9 @@ export default async function ExamResultsPage({
 
   if (!exam) notFound()
 
-  const evaluatedSubmissions = exam.submissions.filter(s => s.status === "Evaluated")
+  const evaluatedSubmissions = exam.submissions.filter((s: any) => s.status === "Evaluated")
   const averageScore = evaluatedSubmissions.length > 0 
-    ? (evaluatedSubmissions.reduce((acc, curr) => acc + Number(curr.totalScore || 0), 0) / evaluatedSubmissions.length).toFixed(2)
+    ? (evaluatedSubmissions.reduce((acc: number, curr: any) => acc + Number(curr.totalScore || 0), 0) / evaluatedSubmissions.length).toFixed(2)
     : 0
 
   return (

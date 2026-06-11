@@ -1358,7 +1358,8 @@ export const ExamSubmissionScalarFieldEnum = {
   startedAt: 'startedAt',
   submittedAt: 'submittedAt',
   totalScore: 'totalScore',
-  status: 'status'
+  status: 'status',
+  violationCount: 'violationCount'
 } as const
 
 export type ExamSubmissionScalarFieldEnum = (typeof ExamSubmissionScalarFieldEnum)[keyof typeof ExamSubmissionScalarFieldEnum]
