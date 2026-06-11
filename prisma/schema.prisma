@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  Admin
+  Instructor
+  Student
+}
+
+enum SubmissionStatus {
+  In_Progress  @map("In Progress")
+  Completed
+  Evaluated
+}
+
+
+model Department {
+  id        Int      @id @default(autoincrement()) @map("department_id")
+  name      String   @unique @db.VarChar(150)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // "administers" 1:N — one admin administers many departments
+  adminId Int?  @map("admin_id")
+  admin   User? @relation("AdminOf", fields: [adminId], references: [id], onDelete: SetNull)
+
+  // "belongs to" inverse — users whose departmentId points here
+  users User[] @relation("BelongsTo")
+
+  @@map("departments")
+}
+
+model User {
+  id               Int      @id @default(autoincrement()) @map("user_id")
+  name             String   @db.VarChar(100)
+  username         String   @unique @db.VarChar(50)
+  email            String   @unique @db.VarChar(100)
+  passwordHash     String   @map("password_hash") @db.VarChar(255)
+  role             UserRole
+  enrollmentNumber String?  @unique @map("enrollment_number") @db.VarChar(50)
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  // "belongs to" N:1 — each user belongs to one department
+  departmentId Int?        @map("department_id")
+  department   Department? @relation("BelongsTo", fields: [departmentId], references: [id], onDelete: SetNull)
+
+  // "administers" inverse — departments this admin manages
+  administeredDepartments Department[] @relation("AdminOf")
+
+  examsCreated   Exam[]
+  submissions    ExamSubmission[]
+  studentBatches StudentBatch[]
+  batchesManaged Batch[]          @relation("InstructorBatches")
+  auditLogs      AuditLog[]
+
+  @@map("users")
+}
+
+model Batch {
+  id           Int    @id @default(autoincrement()) @map("batch_id")
+  instructorId Int    @map("instructor_id")
+  name         String @db.VarChar(100)
+  description  String?
+
+  instructor     User           @relation("InstructorBatches", fields: [instructorId], references: [id], onDelete: Cascade)
+  studentBatches StudentBatch[]
+  examBatches    ExamBatch[]
+
+  @@map("batches")
+}
+
+model StudentBatch {
+  studentId Int   @map("student_id")
+  batchId   Int   @map("batch_id")
+  student   User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  batch     Batch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@id([studentId, batchId])
+  @@map("student_batches")
+}
+
+model Exam {
+  id              Int      @id @default(autoincrement()) @map("exam_id")
+  instructorId    Int      @map("instructor_id")
+  title           String   @db.VarChar(200)
+  startDatetime   DateTime @map("start_datetime")
+  durationMinutes Int      @map("duration_minutes")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  instructor  User             @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  questions   Question[]
+  examBatches ExamBatch[]
+  submissions ExamSubmission[]
+
+  @@map("exams")
+}
+
+model ExamBatch {
+  examId  Int   @map("exam_id")
+  batchId Int   @map("batch_id")
+  exam    Exam  @relation(fields: [examId], references: [id], onDelete: Cascade)
+  batch   Batch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@id([examId, batchId])
+  @@map("exam_batches")
+}
+
+model Question {
+  id            Int     @id @default(autoincrement()) @map("question_id")
+  examId        Int     @map("exam_id")
+  questionText  String  @map("question_text")
+  marksAwarded  Decimal @default(1.00) @map("marks_awarded") @db.Decimal(5, 2)
+  questionOrder Int     @default(0) @map("question_order")
+
+  exam      Exam              @relation(fields: [examId], references: [id], onDelete: Cascade)
+  options   QuestionOption[]
+  responses StudentResponse[]
+
+  @@map("questions")
+}
+
+model QuestionOption {
+  id         Int     @id @default(autoincrement()) @map("option_id")
+  questionId Int     @map("question_id")
+  optionText String  @map("option_text")
+  isCorrect  Boolean @default(false) @map("is_correct")
+
+  question  Question          @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  responses StudentResponse[]
+
+  @@map("question_options")
+}
+
+model ExamSubmission {
+  id          Int              @id @default(autoincrement()) @map("submission_id")
+  examId      Int              @map("exam_id")
+  studentId   Int              @map("student_id")
+  startedAt   DateTime         @default(now()) @map("started_at")
+  submittedAt DateTime?        @map("submitted_at")
+  totalScore      Decimal          @default(0.00) @map("total_score") @db.Decimal(5, 2)
+  status          SubmissionStatus @default(In_Progress)
+  violationCount  Int              @default(0) @map("violation_count")
+
+  exam      Exam              @relation(fields: [examId], references: [id], onDelete: Cascade)
+  student   User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  responses StudentResponse[]
+
+  @@unique([examId, studentId])
+  @@map("exam_submissions")
+}
+
+model StudentResponse {
+  id               Int  @id @default(autoincrement()) @map("response_id")
+  submissionId     Int  @map("submission_id")
+  questionId       Int  @map("question_id")
+  selectedOptionId Int? @map("selected_option_id")
+
+  submission     ExamSubmission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  question       Question        @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  selectedOption QuestionOption? @relation(fields: [selectedOptionId], references: [id], onDelete: SetNull)
+
+  @@unique([submissionId, questionId])
+  @@map("student_responses")
+}
+
+model AuditLog {
+  id           Int      @id @default(autoincrement()) @map("log_id")
+  userId       Int?     @map("user_id")
+  action       String   @db.VarChar(255)
+  resourceType String?  @map("resource_type") @db.VarChar(100)
+  resourceId   Int?     @map("resource_id")
+  details      String?
+  ipAddress    String?  @map("ip_address") @db.VarChar(45)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}
